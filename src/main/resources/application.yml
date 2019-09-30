@@ -1,0 +1,96 @@
+spring:
+    application:
+        name: jbone-bpm-admin
+    redis:
+        host: 127.0.0.1
+        port: 6379
+        password: jbone
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+    thymeleaf:
+        cache: false
+        enabled: true
+    freemarker:
+        enabled: false
+    jpa:
+        show-sql: true
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/jbone_bpm?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&useSSL=false
+        username: root
+        password: opc@2018
+server:
+    port: 60002
+
+
+
+management:
+    security:
+        enabled: false
+
+jbone:
+    cas:
+
+        casServerUrl: https://jbone-cas.majunwei.com:8443/cas
+
+        currentServerUrlPrefix: http://jbone-bpm-admin.majunwei.com:60002
+
+        casFilterUrlPattern: /cas
+
+        successUrl: /
+
+        unauthorizedUrl: /403
+
+        clientSessionTimeout: 1800000
+
+        filterChainDefinition:
+            /health: anon
+            /archaius: anon
+            /refresh: anon
+            /configprops: anon
+            /env/**: anon
+            /service-registry/**: anon
+            /auditevents: anon
+            /pause: anon
+            /dump: anon
+            /loggers/**: anon
+            /resume: anon
+            /metrics/**: anon
+            /channels: anon
+            /beans: anon
+            /mappings: anon
+            /autoconfig: anon
+            /trace: anon
+            /hystrix.stream/**: anon
+            /info: anon
+            /restart: anon
+            /heapdump: anon
+            /features: anon
+            /**: authc
+
+    sys:
+        serverName: jbone-bpm-admin
+
+    rpc:
+        sysServer.feign:
+            protocol: http
+            name: jbone-sys-server
+
+feign:
+    httpclient:
+        enabled: true
+
+
+hystrix.command.default.execution.timeout.enabled: true
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+
+hystrix.command.default.execution.isolation.strategy: THREAD
+
+hystrix.threadpool.default.coreSize: 100
+
+hystrix.command.default.execution.isolation.thread.interruptOnTimeout: true
+
+hystrix.command.default.execution.isolation.thread.interruptOnCancel: false

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%thread] %logger{5}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logFile.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%thread] %logger{5}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.experts.core.biller.statemachine.api" level="DEBUG"/>
+
+    <logger name="com.experts.core.biller.statemachine.api" level="TRACE"/>
+
+    <logger name="com.experts.core.biller.statemachine.api" level="ERROR"/>
+
+    <logger name="co.qyef.starter.firebase" level="ERROR"/>
+    <logger name="co.qyef.starter.firebase" level="TRACE"/>
+    <logger name="co.qyef.starter.firebase" level="DEBUG"/>
+
+
+    <logger name="com.gismat.test" level="ERROR"/>
+    <logger name="com.gismat.test" level="TRACE"/>
+    <logger name="com.gismat.test" level="DEBUG"/>
+
+
+    <logger name="org.springframework.core" level="ERROR"/>
+    <logger name="org.springframework.statemachine" level="ERROR"/>
+    <logger name="org.springframework.security" level="ERROR"/>
+    <logger name="org.opensaml.security" level="ERROR"></logger>
+    <logger name="org.springframework.cloud" level="ERROR"/>
+    <logger name="org.springframework.session" level="ERROR"/>
+    <logger name="org.springframework.integration" level="ERROR"/>
+    <logger name="org.springframework.jms" level="ERROR"/>
+    <logger name="org.springframework.*" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"></logger>
+    <logger name="org.springframework.boot" level="ERROR"></logger>
+    <logger name="org.springframework.ws" level="ERROR"></logger>
+    <logger name="org.springframework.integration" level="V"></logger>
+    <logger name="com.amazonaws" level="ERROR"></logger>
+    <logger name="org.jasig.cas" level="ERROR"></logger>
+
+
+    <logger name="org.hibernate" level="DEBUG"/>
+
+    <appender name="TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>localhost:5044</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

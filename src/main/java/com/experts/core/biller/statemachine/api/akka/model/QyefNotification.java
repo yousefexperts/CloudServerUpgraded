@@ -1,0 +1,63 @@
+package com.experts.core.biller.statemachine.api.akka.model;
+
+
+public class QyefNotification {
+
+    private long timestamp;
+    private String city;
+    private String street;
+    private float temp;
+    private float light;
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public float getTemp() {
+        return temp;
+    }
+
+    public void setTemp(float temp) {
+        this.temp = temp;
+    }
+
+    public float getLight() {
+        return light;
+    }
+
+    public void setLight(float light) {
+        this.light = light;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("WeatherNotification{");
+        sb.append("timestamp=").append(timestamp);
+        sb.append(", city='").append(city).append('\'');
+        sb.append(", street='").append(street).append('\'');
+        sb.append(", temp=").append(temp);
+        sb.append(", light=").append(light);
+        sb.append('}');
+        return sb.toString();
+    }
+}

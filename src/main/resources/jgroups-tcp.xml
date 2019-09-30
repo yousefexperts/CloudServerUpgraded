@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:9.1 http://www.infinispan.org/schemas/infinispan-config-9.1.xsd"
+        xmlns="urn:infinispan:config:9.1">
+
+    <jgroups>
+        <stack-file name="custom-stack" path="my-jgroups-conf.xml" />
+    </jgroups>
+
+    <cache-container name="HibernateOGM" default-cache="DEFAULT">
+        <transport stack="custom-stack" />
+
+
+        <distributed-cache name="DEFAULT" mode="SYNC">
+            <locking striping="false" acquire-timeout="10000"
+                     concurrency-level="500" write-skew="false" />
+            <transaction mode="NON_DURABLE_XA" />
+            <state-transfer enabled="true" timeout="480000"
+                            await-initial-transfer="true" />
+        </distributed-cache>
+
+        <replicated-cache name="User" mode="SYNC">
+            <locking striping="false" acquire-timeout="10000"
+                     concurrency-level="500" write-skew="false" />
+            <transaction mode="NON_DURABLE_XA" />
+            <state-transfer enabled="true" timeout="480000"
+                            await-initial-transfer="true" />
+        </replicated-cache>
+
+        <distributed-cache name="Order" mode="SYNC">
+            <locking striping="false" acquire-timeout="10000"
+                     concurrency-level="500" write-skew="false" />
+            <transaction mode="NON_DURABLE_XA" />
+            <state-transfer enabled="true" timeout="480000"
+                            await-initial-transfer="true" />
+        </distributed-cache>
+
+        <distributed-cache name="associations_User_Order" mode="SYNC">
+            <locking striping="false" acquire-timeout="10000"
+                     concurrency-level="500" write-skew="false" />
+            <transaction mode="NON_DURABLE_XA" />
+            <state-transfer enabled="true" timeout="480000"
+                            await-initial-transfer="true" />
+        </distributed-cache>
+
+    </cache-container>
+
+</infinispan>
+

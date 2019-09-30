@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false"
+         >
+
+    <diskStore path="java.io.tmpdir"/>
+    <defaultCache
+            maxEntriesLocalHeap="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxEntriesLocalDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"/>
+
+
+
+
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Store"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+
+
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.About"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.ShiftingTime"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Catogery"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Owner"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.ItemClassification"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Items"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.AdsOffers"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.ShiftingPeopleTime"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.SubCatogery"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Branch"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.Images"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.address.Address"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+
+
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.address.Street"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+
+
+    <cache
+            name="com.experts.core.biller.statemachine.api.model.domain.jpa.hr.engine.address.PlaceInterest"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+
+    />
+</ehcache>

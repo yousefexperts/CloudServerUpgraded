@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://java.sun.com/jsf/facelets">
+
+<head>
+	<title>Coming Soon 6</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Qyef.com</title>
+	
+	<title>Constellation Admin Skin</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+
+	<link href="static/resources/admin/css/reset.css" rel="stylesheet" type="text/css">
+	<link href="static/resources/admin/css/common.css" rel="stylesheet" type="text/css">
+	<link href="static/resources/admin/css/form.css" rel="stylesheet" type="text/css">
+	<link href="static/resources/admin/css/standard.css" rel="stylesheet" type="text/css">
+	<link href="static/resources/admin/css/special-pages.css" rel="stylesheet" type="text/css">
+	
+
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link rel="icon" type="image/png" href="favicon-large.png">
+
+
+	
+</head>
+
+<body class="special-page login-bg dark">
+
+	<section id="message">
+		<div class="block-border"><div class="block-content no-title dark-bg">
+			<p class="mini-infos">Qyef Dashboard</b></p>
+		</div></div>
+	</section>
+	
+	<section id="login-block">
+		<div class="block-border"><div class="block-content">
+
+			<h1>Admin</h1>
+			<div class="block-header">Please login</div>
+				
+			<p class="message error no-margin">Error message</p>
+			
+			<form class="form with-margin" name="login-form" id="login-form" method="post" action="#">
+				<input type="hidden" name="a" id="a" value="send">
+				<p class="inline-small-label">
+					<label for="login"><span class="big">User name</span></label>
+					<input type="text" name="j_username" id="j_username" class="full-width" value="">
+				</p>
+				<p class="inline-small-label">
+					<label for="pass"><span class="big">Password</span></label>
+					<input type="password" name="j_password" id="j_password" class="full-width" value="">
+				</p>
+				
+				<input type="button" class="float-right btn-action" value="login" onclick="register()"></input>
+				<p class="input-height">
+					<input type="checkbox" name="keep-logged" id="keep-logged" value="1" class="mini-switch" checked="checked">
+					<label for="keep-logged" class="inline">Keep me logged in</label>
+				</p>
+			</form>
+			
+			<form class="form" id="password-recovery" method="post" action="">
+				<fieldset class="grey-bg no-margin collapse">
+					<legend><a href="#">Lost password?</a></legend>
+					<p class="input-with-button">
+						<label for="recovery-mail">Enter your e-mail address</label>
+						<input type="text" name="recovery-mail" id="recovery-mail" value="">
+						<button type="button">Send</button>
+					</p>
+				</fieldset>
+			</form>
+		</div></div>
+	</section>
+
+	<script type="text/javascript" src="static/resources/assets/admin/js/libs/modernizr.custom.min.js"></script>
+	<script type="text/javascript" src="static/resources/assets/admin/js/libs/jquery-1.6.3.min.js"></script>
+
+	<script type="text/javascript" src="static/resources/assets/admin/js/old-browsers.js"></script>
+	<script type="text/javascript" src="static/resources/assets/admin/js/common.js"></script>
+	<script type="text/javascript" src="static/resources/assets/admin/js/standard.js"></script>
+	<script type="text/javascript" src="static/resources/assets/admin/js/jquery.tip.js"></script>
+
+	<script>
+	
+		$(document).ready(function()
+		{
+
+			$('#login-form').submit(function(event)
+			{
+
+				event.preventDefault();
+				
+
+				var login = $('#login').val();
+				var pass = $('#pass').val();
+				
+				if (!login || login.length == 0)
+				{
+					$('#login-block').removeBlockMessages().blockMessage('Please enter your user name', {type: 'warning'});
+				}
+				else if (!pass || pass.length == 0)
+				{
+					$('#login-block').removeBlockMessages().blockMessage('Please enter your password', {type: 'warning'});
+				}
+				else
+				{
+					var submitBt = $(this).find('button[type=submit]');
+					submitBt.disableBt();
+					
+
+					var target = $(this).attr('action');
+					if (!target || target == '')
+					{
+
+						target = document.location.href.match(/^([^#]+)/)[1];
+					}
+					
+
+					var data = {
+							a: $('#a').val(),
+							login: login,
+							pass: pass,
+							'keep-logged': $('#keep-logged').attr('checked') ? 1 : 0
+						},
+						redirect = $('#redirect'),
+						sendTimer = new Date().getTime();
+					
+					if (redirect.length > 0)
+					{
+						data.redirect = redirect.val();
+					}
+					
+
+					$.ajax({
+						url: target,
+						dataType: 'json',
+						type: 'POST',
+						data: data,
+						success: function(data, textStatus, XMLHttpRequest)
+						{
+							if (data.valid)
+							{
+
+								var receiveTimer = new Date().getTime();
+								if (receiveTimer-sendTimer < 500)
+								{
+									setTimeout(function()
+									{
+										document.location.href = data.redirect;
+										
+									}, 500-(receiveTimer-sendTimer));
+								}
+								else
+								{
+									document.location.href = data.redirect;
+								}
+							}
+							else
+							{
+
+								$('#login-block').removeBlockMessages().blockMessage(data.error || 'An unexpected error occured, please try again', {type: 'error'});
+								
+								submitBt.enableBt();
+							}
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown)
+						{
+
+							$('#login-block').removeBlockMessages().blockMessage('Error while contacting server, please try again', {type: 'error'});
+							
+							submitBt.enableBt();
+						}
+					});
+					
+
+					$('#login-block').removeBlockMessages().blockMessage('Please wait, cheking login...', {type: 'loading'});
+				}
+			});
+		});
+	
+	</script>
+    <script type="text/javascript">
+        function register() {
+            var j_username = $("#j_username").val();
+            var j_password = $("#j_password").val();
+            var object = [{j_username: new String(j_username), j_password: new String(j_password)}]
+            $.ajax({
+                url: "http://192.168.1.6:8070/selectUserName",
+                type: "POST",
+                data: JSON.stringify(object),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, status) {
+                    alert("Data: " + data.success + "\nStatus: " + status);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

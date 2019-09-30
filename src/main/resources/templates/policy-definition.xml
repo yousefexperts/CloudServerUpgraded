@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+        PolicyId="{{policyId}}"
+        Version="1"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+    <Description>{{description}}</Description>
+    <PolicyDefaults>
+        <XPathVersion>http://www.w3.org/TR/1999/REC-xpath-19991116</XPathVersion>
+    </PolicyDefaults>
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#string">{{serviceProviderId}}</AttributeValue>
+                    <AttributeDesignator
+                            AttributeId="SPentityID"
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                            MustBePresent="true"
+                            />
+                </Match>
+            </AllOf>
+        </AnyOf>
+        {{#anyIdentityProviders}}
+        <AnyOf>
+            {{#identityProviderIds}}
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#string">{{toString}}</AttributeValue>
+                    <AttributeDesignator
+                            AttributeId="IDPentityID"
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                            MustBePresent="true"
+                            />
+                </Match>
+            </AllOf>
+            {{/identityProviderIds}}
+        </AnyOf>
+        {{/anyIdentityProviders}}
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue
+                        DataType="http://www.w3.org/2001/XMLSchema#string">EngineBlock</AttributeValue>
+                    <AttributeDesignator
+                        AttributeId="ClientID"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                        MustBePresent="true"
+                    />
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    {{^denyRule}}
+    <Rule Effect="Permit"
+          RuleId="urn:surfconext:xacml:rule:id:permit">
+        <Description />
+        {{#allAttributesMustMatch}}
+            {{> target-partial-logical-and.xml}}
+        {{/allAttributesMustMatch}}
+        {{^allAttributesMustMatch}}
+            {{> target-partial-logical-or.xml}}
+        {{/allAttributesMustMatch}}
+    </Rule>
+    <Rule Effect="Deny"
+          RuleId="urn:surfconext:xacml:rule:id:deny">
+        <Description />
+        <Target />
+        <AdviceExpressions>
+            <AdviceExpression AdviceId="urn:surfconext:xacml:advice:id:{{nameId}}"
+                              AppliesTo="Deny">
+                <AttributeAssignmentExpression
+                        AttributeId="DenyMessage:en"
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#string">{{denyAdvice}}</AttributeValue>
+                </AttributeAssignmentExpression>
+                <AttributeAssignmentExpression
+                        AttributeId="DenyMessage:nl"
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#string">{{denyAdviceNl}}</AttributeValue>
+                </AttributeAssignmentExpression>
+                <AttributeAssignmentExpression
+                    AttributeId="IdPOnly"
+                    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+                    <AttributeValue
+                        DataType="http://www.w3.org/2001/XMLSchema#boolean">{{idpOnly}}</AttributeValue>
+                </AttributeAssignmentExpression>
+            </AdviceExpression>
+        </AdviceExpressions>
+    </Rule>
+    {{/denyRule}}
+    {{#denyRule}}
+    <Rule Effect="Deny"
+          RuleId="urn:surfconext:xacml:rule:id:deny">
+        <Description />
+        {{#allAttributesMustMatch}}
+            {{> target-partial-logical-and.xml}}
+        {{/allAttributesMustMatch}}
+        {{^allAttributesMustMatch}}
+            {{> target-partial-logical-or.xml}}
+        {{/allAttributesMustMatch}}
+        <AdviceExpressions>
+            <AdviceExpression AdviceId="urn:surfconext:xacml:advice:id:{{nameId}}"
+                              AppliesTo="Deny">
+                <AttributeAssignmentExpression
+                        AttributeId="DenyMessage:en"
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#string">{{denyAdvice}}</AttributeValue>
+                </AttributeAssignmentExpression>
+                <AttributeAssignmentExpression
+                        AttributeId="DenyMessage:nl"
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+                    <AttributeValue
+                            DataType="http://www.w3.org/2001/XMLSchema#string">{{denyAdviceNl}}</AttributeValue>
+                </AttributeAssignmentExpression>
+                <AttributeAssignmentExpression
+                    AttributeId="IdPOnly"
+                    Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+                    <AttributeValue
+                        DataType="http://www.w3.org/2001/XMLSchema#boolean">{{idpOnly}}</AttributeValue>
+                </AttributeAssignmentExpression>
+            </AdviceExpression>
+        </AdviceExpressions>
+    </Rule>
+    <Rule Effect="Permit"
+          RuleId="http://axiomatics.com/alfa/identifier/OpenConext.pdp.DenyRulePolicyEmptyPermit.permitAccess">
+        <Description />
+        <Target />
+    </Rule>
+    {{/denyRule}}
+</Policy>

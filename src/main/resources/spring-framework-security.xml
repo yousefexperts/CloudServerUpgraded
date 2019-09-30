@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security.xsd">
+    <debug/>
+
+    <http pattern="/login.jsp" security="none"/>
+    <http pattern="/user/login" security="none"/>
+    <http pattern="/error.jsp" security="none"/>
+    <http pattern="/WEB-INF/jsp/*" security="none"/>
+    <http pattern="/monitor/**" security="none"/>
+
+    <http name="hl" use-expressions="true" auto-config="false" entry-point-ref="authenticationLoginEntry">
+
+        <csrf disabled="true"/>
+
+        <headers disabled="true" />
+
+
+        <custom-filter ref="logoutFilter" before="LOGOUT_FILTER" />
+
+
+        <custom-filter ref="authenticationProcessingFilter" before="FORM_LOGIN_FILTER" />
+
+
+        <custom-filter ref="rememberMeFilter" position="REMEMBER_ME_FILTER"/>
+
+
+        <custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+
+    </http>
+    <beans:bean id="authenticationLoginEntry" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.login.AuthenticationLoginEntry">
+        <beans:property name="loginUrl" value="/user/login" />
+    </beans:bean>
+
+    <beans:bean id="authenticationProcessingFilter"	class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <!--<beans:constructor-arg value="/login/check" />-->
+        <beans:property name="filterProcessesUrl" value="/login/check"/>
+        <beans:property name="SessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationSuccessHandler"	ref="myAuthenticationSuccessHandler" />
+        <beans:property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler" />
+        <beans:property name="rememberMeServices" ref="rememberMeServices"/>
+    </beans:bean>
+
+    <beans:bean id="rememberMeFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+        <beans:constructor-arg name="authenticationManager" ref="authenticationManager"/>
+        <beans:constructor-arg name="rememberMeServices" ref="rememberMeServices"/>
+    </beans:bean>
+
+    <beans:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+        <beans:constructor-arg name="key" value="hl" />
+        <beans:constructor-arg name="userDetailsService" ref="userDetailService"/>
+        <beans:constructor-arg name="tokenRepository" ref="rememberMeTokenRepositoryImpl"/>
+        <beans:property name="parameter" value="rememberMe"/>
+    </beans:bean>
+
+    <beans:bean id="userDetailService" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.provider.MyUserDetailsService"/>
+    <beans:bean id="rememberMeTokenRepositoryImpl" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.login.RememberMeTokenRepositoryImpl">
+        <beans:property name="createTableOnStartup" value="false"/>
+    </beans:bean>
+
+    <beans:bean id="sessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+        <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+        <beans:property name="maximumSessions" value="1" />
+        <beans:property name="exceptionIfMaximumExceeded" value="false" />
+    </beans:bean>
+
+    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailService"/>
+        <authentication-provider ref="rememberMeAuthenticationProvider" />
+    </authentication-manager>
+
+    <beans:bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <beans:constructor-arg name="key" value="hl"/>
+    </beans:bean>
+
+    <beans:bean id="myAuthenticationSuccessHandler" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.handler.AuthenticationSuccessHandler">
+        <!--<beans:property name="alwaysUseDefaultTargetUrl" value="true" />-->
+        <beans:property name="defaultTargetUrl" value="/security/home"/>
+    </beans:bean>
+
+    <beans:bean id="myAuthenticationFailureHandler" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.handler.AuthenticationFailureHandler">
+        <beans:property name="defaultFailureUrl" value="/error.jsp"/>
+    </beans:bean>
+
+
+    <beans:bean id="securityFilter" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.filter.MYFilterSecurityInterceptor" >
+
+        <beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+
+        <beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+    </beans:bean>
+
+
+    <beans:bean id="securityMetadataSource"	class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.access.SecurityMetadataSource"/>
+
+    <beans:bean id="accessDecisionManager" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.access.AccessDecisionManager" />
+
+    <beans:bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+
+        <beans:property name="filterProcessesUrl" value="/user/logout" />
+
+        <beans:constructor-arg ref="logoutSuccessHandler"/>
+
+        <beans:constructor-arg name="handlers">
+            <beans:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+        </beans:constructor-arg>
+    </beans:bean>
+
+
+    <beans:bean id="logoutSuccessHandler" class="com.experts.core.biller.statemachine.api.web.syslog.security.authentication.handler.LogoutSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/user/login" />
+    </beans:bean>
+</beans:beans>

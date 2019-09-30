@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
+
+    <persistence-unit name="EXPERTS-MYSQL" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="net.sf.ehcache.configurationResourceName" value="ehcache.xml"></property>
+            <property name="current_session_context_class" value="thread"></property>
+            <property name="hibernate.cache.use_query_cache" value="true"></property>
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"></property>
+            <property name="hibernate.cache.use_structured_entries" value="true"></property>
+            <property name="hibernate.cache.generate_statistics" value="true"></property>
+            <property name="hibernate.cache.infinispan.cfg" value="infinispan.xml"/>
+            <property name="hibernate.cache.use_minimal_puts" value="true"/>
+            <property name="hibernate.cache.hazelcast.use_native_client" value="true"/>
+            <property name="hibernate.cache.hazelcast.native_client_hosts" value="192.168.1.6:5701"/>
+            <property name="hibernate.cache.hazelcast.native_client_group" value="dev"/>
+            <property name="hibernate.cache.hazelcast.native_client_password" value="dev-pass"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/pdpserver?serverTimezone=UTC"/>
+            <property name="hibernate.generate_statistics" value="true"/>
+            <property name="javax.persistence.sharedCache.mode" value="ENABLE_SELECTIVE"/>
+            <property name="hibernate.transaction.jta.platform" value="JBossTS" />
+            <property name="hibernate.ogm.datastore.provider" value="infinispan_embedded" />
+        </properties>
+    </persistence-unit>
+</persistence>
