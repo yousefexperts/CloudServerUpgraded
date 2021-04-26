@@ -169,7 +169,7 @@
         <hibernate.version>5.4.2.Final</hibernate.version>
         <mapstruct.version>1.1.0.Final</mapstruct.version>
         <jjwt.version>0.7.0</jjwt.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <metrics-spring.version>3.1.3</metrics-spring.version>
         <liquibase-hibernate5.version>3.7</liquibase-hibernate5.version>
         <springfox.version>2.9.2</springfox.version>
@@ -1434,7 +1434,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.5</version>
+            <version>2.7</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.logging</groupId>
@@ -3806,7 +3806,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>2.7</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
@@ -4270,7 +4270,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>2.7</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
