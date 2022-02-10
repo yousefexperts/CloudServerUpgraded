@@ -2914,7 +2914,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.2.Final</version>
+            <version>5.4.24.Final</version>
             <exclusions>
 
                 <exclusion>
@@ -5931,7 +5931,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.0.Final</version>
+            <version>5.4.24.Final</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
